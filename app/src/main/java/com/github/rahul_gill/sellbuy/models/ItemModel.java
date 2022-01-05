@@ -1,5 +1,8 @@
 package com.github.rahul_gill.sellbuy.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ItemModel {
     public String date;
     public String time;
@@ -31,5 +34,28 @@ public class ItemModel {
                 quantity == other.quantity &&
                 totalPrice == other.totalPrice &&
                 typeOfTransaction.equals(other.typeOfTransaction);
+    }
+    public JSONObject toJsonObject() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("date",date);
+        jsonObject.put("time",time);
+        jsonObject.put("name",name);
+        jsonObject.put("pricePerItem",pricePerItem);
+        jsonObject.put("unit",unit);
+        jsonObject.put("quantity",quantity);
+        jsonObject.put("totalPrice",totalPrice);
+        jsonObject.put("typeOfTransaction",typeOfTransaction);
+        return jsonObject;
+    }
+    public JSONObject toJsonObjectWithId(int id) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        jsonObject.put("name",name);
+        jsonObject.put("pricePerItem",pricePerItem);
+        jsonObject.put("unit",unit);
+        jsonObject.put("quantity",quantity);
+        jsonObject.put("totalPrice",totalPrice);
+        jsonObject.put("typeOfTransaction",typeOfTransaction);
+        return jsonObject;
     }
 }

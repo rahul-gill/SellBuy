@@ -2,8 +2,12 @@ package com.github.rahul_gill.sellbuy;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +56,8 @@ public class MainScreenFragment extends Fragment {
         binding.todayDate.setText(
                 new SimpleDateFormat("d/M/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime())
         );
+        setHasOptionsMenu(true);
+
         return binding.getRoot();
     }
 
@@ -68,23 +74,35 @@ public class MainScreenFragment extends Fragment {
         viewModel.appBarTitle.setValue("");
 
         final Observer<List<ItemModel>> itemListObserver = itemModels -> {
-            adapter.submitList(itemModels);
+            if(itemModels != null) {
+                adapter.submitList(itemModels);
 //            adapter.notifyItemChanged(adapter.items.size() -1);
-            int totalPurchases = 0, totalSells = 0;
-            for(ItemModel i: itemModels){
-                if(i.typeOfTransaction.equals("purchase"))
-                    totalPurchases += i.totalPrice;
-                else
-                    totalSells += i.totalPrice;
+                int totalPurchases = 0, totalSells = 0;
+                for (ItemModel i : itemModels) {
+                    if (i.typeOfTransaction.equals("purchase"))
+                        totalPurchases += i.totalPrice;
+                    else
+                        totalSells += i.totalPrice;
+                }
+                binding.purchaseCountTotal.setText(String.valueOf(totalPurchases));
+                binding.purchaseCountTotalHeader.setText(String.valueOf(totalPurchases));
+                binding.sellCountTotal.setText(String.valueOf(totalSells));
+                binding.sellCountTotalHeader.setText(String.valueOf(totalSells));
             }
-            binding.purchaseCountTotal.setText(String.valueOf(totalPurchases));
-            binding.purchaseCountTotalHeader.setText(String.valueOf(totalPurchases));
-            binding.sellCountTotal.setText(String.valueOf(totalSells));
-            binding.sellCountTotalHeader.setText(String.valueOf(totalSells));
         };
         viewModel.getItems().observe(this, itemListObserver);
 //        adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.app_bar_options, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
 }

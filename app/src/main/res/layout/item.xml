@@ -28,7 +28,7 @@
 
                 <TextView
                     android:id="@+id/item_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:layout_marginStart="4dp"
@@ -38,7 +38,7 @@
 
                 <TextView
                     android:id="@+id/purchase_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
                     android:layout_marginStart="4dp"
@@ -48,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/sell_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/green"
                     tools:text="TextView"

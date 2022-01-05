@@ -49,4 +49,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onNavigateUp();
     }
+
+    @Override
+    public void onBackPressed() {
+        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host);
+        boolean unsuccessfulNavigation = true;
+        if(navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            unsuccessfulNavigation = !navController.navigateUp();
+        }
+        if(unsuccessfulNavigation) super.onBackPressed();
+    }
 }

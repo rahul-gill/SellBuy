@@ -1,10 +1,8 @@
 package com.github.rahul_gill.sellbuy;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +98,6 @@ public class PurchaseSellFragment extends Fragment {
         if(quantity.equals("")) quantity = "0";
         if(pricePerItem.equals("")) pricePerItem = "0";
         int i = Integer.parseInt(quantity) * Integer.parseInt(pricePerItem);
-        Log.e("debug", String.format("onDataChange: %s * %s = %d", quantity, pricePerItem, i));
         binding.totalMoney.setText(
                 String.valueOf(i)
         );
