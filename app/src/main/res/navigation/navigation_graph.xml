@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="com.github.rahul_gill.sellbuy.MainScreenFragment"
+        android:label="MainScreenFragment" >
+        <action
+            android:id="@+id/action_mainScreenFragment_to_purchaseSellFragment"
+            app:destination="@id/purchaseSellFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/purchaseSellFragment"
+        android:name="com.github.rahul_gill.sellbuy.PurchaseSellFragment"
+        android:label="PurchaseSellFragment" >
+        <action
+            android:id="@+id/action_purchaseSellFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+        <argument
+            android:name="isSelling"
+            app:argType="boolean" />
+    </fragment>
+</navigation>
