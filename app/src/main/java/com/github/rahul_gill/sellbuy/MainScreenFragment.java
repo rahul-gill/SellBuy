@@ -11,10 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -27,7 +25,7 @@ import com.github.rahul_gill.sellbuy.viemodel.AppViewModelFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Collections;
 import java.util.Locale;
 
 public class MainScreenFragment extends Fragment {
@@ -42,17 +40,13 @@ public class MainScreenFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_screen, container, false);
         adapter = new ItemsListAdapter();
         binding.itemDetailsList.setAdapter(adapter);
-        binding.purchaseButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(
-                    MainScreenFragmentDirections.actionMainScreenFragmentToPurchaseSellFragment(false)
-            );
-        });
+        binding.purchaseButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(
+                MainScreenFragmentDirections.actionMainScreenFragmentToPurchaseSellFragment(false)
+        ));
 
-        binding.sellButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(
-                    MainScreenFragmentDirections.actionMainScreenFragmentToPurchaseSellFragment(true)
-            );
-        });
+        binding.sellButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(
+                MainScreenFragmentDirections.actionMainScreenFragmentToPurchaseSellFragment(true)
+        ));
         binding.todayDate.setText(
                 new SimpleDateFormat("d/M/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime())
         );
@@ -73,25 +67,35 @@ public class MainScreenFragment extends Fragment {
         ).get(AppViewModel.class);
         viewModel.appBarTitle.setValue("");
 
-        final Observer<List<ItemModel>> itemListObserver = itemModels -> {
+        viewModel.getItems().observe(this, itemModels -> {
             if(itemModels != null) {
+                Collections.reverse(itemModels);
                 adapter.submitList(itemModels);
-//            adapter.notifyItemChanged(adapter.items.size() -1);
                 int totalPurchases = 0, totalSells = 0;
-                for (ItemModel i : itemModels) {
-                    if (i.typeOfTransaction.equals("purchase"))
-                        totalPurchases += i.totalPrice;
-                    else
+                for(ItemModel i: itemModels){
+                    if(i.typeOfTransaction.equals("purchase")){
                         totalSells += i.totalPrice;
+                    }
+                    else if(i.typeOfTransaction.equals("buy")){
+                        totalSells += i.totalPrice;
+                    }
                 }
+
                 binding.purchaseCountTotal.setText(String.valueOf(totalPurchases));
                 binding.purchaseCountTotalHeader.setText(String.valueOf(totalPurchases));
                 binding.sellCountTotal.setText(String.valueOf(totalSells));
                 binding.sellCountTotalHeader.setText(String.valueOf(totalSells));
             }
-        };
-        viewModel.getItems().observe(this, itemListObserver);
-//        adapter.notifyDataSetChanged();
+        });
+//        viewModel.getTotalPurchases().observe(this, totalPurchases -> {
+//            binding.purchaseCountTotal.setText(String.valueOf(totalPurchases));
+//            binding.purchaseCountTotalHeader.setText(String.valueOf(totalPurchases));
+//        });
+//        viewModel.getTotalSells().observe(this, totalSells -> {
+
+//            binding.sellCountTotal.setText(String.valueOf(totalSells));
+//            binding.sellCountTotalHeader.setText(String.valueOf(totalSells));
+//        });
     }
 
     @Override

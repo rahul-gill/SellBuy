@@ -66,7 +66,7 @@ public class PurchaseSellFragment extends Fragment {
         viewModel.appBarTitle.setValue(buyOrSell);
 
         final View.OnClickListener onSaveListener = v -> {
-            viewModel.addItem(new ItemModel(
+            viewModel.createItemTransaction(new ItemModel(
                     binding.dateSelectionButton.getText().toString(),
                     binding.timeSelectionButton.getText().toString(),
                     String.valueOf(binding.productNamePrompt.getText()),

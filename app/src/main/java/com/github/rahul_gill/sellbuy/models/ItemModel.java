@@ -58,4 +58,18 @@ public class ItemModel {
         jsonObject.put("typeOfTransaction",typeOfTransaction);
         return jsonObject;
     }
+
+    @Override
+    public String toString() {
+        return "ItemModel{" +
+                "date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", name='" + name + '\'' +
+                ", pricePerItem=" + pricePerItem +
+                ", unit='" + unit + '\'' +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                ", typeOfTransaction='" + typeOfTransaction + '\'' +
+                '}';
+    }
 }
